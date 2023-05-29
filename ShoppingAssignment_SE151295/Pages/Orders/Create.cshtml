@@ -1,0 +1,73 @@
+@page
+@model ShoppingAssignment_SE151295.Pages.Orders.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Order.OrderId" class="control-label"></label>
+                <input asp-for="Order.OrderId" class="form-control" />
+                <span asp-validation-for="Order.OrderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.Customer" class="control-label"></label>
+                <select asp-for="Order.CustomerId" class ="form-control" asp-items="ViewBag.CustomerId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.OrderDate" class="control-label"></label>
+                <input asp-for="NowDate" class="form-control" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.RequiredDate" class="control-label"></label>
+                <input id="IdRequired" asp-for="Order.RequiredDate" onchange="selectRequireDate()" min="@Model.NowDate.ToString("yyyy-MM-ddThh:mm")" class="form-control"/>
+                <span asp-validation-for="Order.RequiredDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.ShippedDate" class="control-label"></label>
+                <input id="IdShippedDate" asp-for="Order.ShippedDate" class="form-control" />
+                <span asp-validation-for="Order.ShippedDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.Freight" class="control-label"></label>
+                <input asp-for="Order.Freight" class="form-control" />
+                <span asp-validation-for="Order.Freight" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.ShipAddress" class="control-label"></label>
+                <input asp-for="Order.ShipAddress" class="form-control" />
+                <span asp-validation-for="Order.ShipAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+   function selectRequireDate() {
+       let value = document.getElementById("IdRequired").value;
+       document.getElementById("IdShippedDate").setAttribute("min", value); 
+   }
+</script>
+
+<div>
+    <a asp-page="OrderManage">Back to List</a>
+    @if (!string.IsNullOrEmpty(@Model.ErrorMessage))
+    {
+        <p class="alert alert-danger" role="alert">@Model.ErrorMessage</p>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

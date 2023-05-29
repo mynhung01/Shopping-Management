@@ -1,0 +1,78 @@
+﻿@page
+@model ShoppingAssignment_SE151295.Pages.Customers.RegisterModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<style>
+    body {
+        background-image: linear-gradient(-225deg, #ebfaf5 0%, #fff2fc 100%);
+        background-image: linear-gradient(to top, #bcebe9 0%, #ffe3ec 100%);
+    }
+</style>
+<h1>REGISTER ACCOUNT</h1>
+@if (@Model.IsUpdateSuccess == true)
+{
+    <p class="alert alert-success" role="alert">Register successfully</p>
+}
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Customer.CustomerId" class="control-label"></label>
+                <input asp-for="Customer.CustomerId" class="form-control" />
+                <span asp-validation-for="Customer.CustomerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Password" class="control-label"></label>
+                <input asp-for="Customer.Password" type="password" class="form-control" />
+                <span asp-validation-for="Customer.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.ContactName" class="control-label"></label>
+                <input asp-for="Customer.ContactName" class="form-control" />
+                <span asp-validation-for="Customer.ContactName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Address" class="control-label"></label>
+                <input asp-for="Customer.Address" class="form-control" />
+                <span asp-validation-for="Customer.Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Phone" class="control-label"></label>
+                <input asp-for="Customer.Phone" class="form-control" />
+                <span asp-validation-for="Customer.Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Customer.Email" class="control-label"></label>
+                <input asp-for="Customer.Email" class="form-control" />
+                <span asp-validation-for="Customer.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group-button">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-page="/Login/MyLogin" class="btn btn-sm btn-success">Log in Here</a>
+            </div>
+                @{
+                    if(!string.IsNullOrEmpty(@Model.ErrorMessage))
+                    {
+                        <p class="alert alert-danger" role="alert">@Model.ErrorMessage</p>
+                    }
+                }
+        </form>
+    </div>
+</div>
+<style>
+    .form-group-button{
+        display:flex;
+        flex-flow:nowrap;
+    }
+</style>
+@*<div>
+    <a asp-page="/Login/MyLogin" class="btn btn-sm btn-success">Log in Here</a>
+</div>
+*@
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,130 @@
+@page
+@model ShoppingAssignment_SE151295.Pages.Products.ProductManageModel
+
+@{
+    ViewData["Title"] = "Product Management";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<style>
+    body {
+        background-color: #f5faf9;
+    }
+    .search-product{
+        display:flex;
+        flex-flow: row nowrap;
+        column-gap: 8px;
+        align-items:center;
+        margin-bottom: 8px;
+    }
+    .search-product > p{
+        margin-bottom: 0;
+    }
+    .search-input{
+        height:38px !important;
+    }
+</style>
+
+<h1>Product Management</h1>
+
+<form method="post">
+    <div class="search-product">
+            <p> Search Product</p>
+            <input type="text" asp-for="search" placeholder="search" class="search-input"/>
+            <input type="submit" value="Search" asp-page-handler="SearchProduct" class="btn btn-primary"/>
+            @{
+                if(!string.IsNullOrEmpty(@Model.MsgErrsearch))
+                {
+                    <p class="alert alert-danger" role="alert">@Model.MsgErrsearch</p>
+                }
+            }
+        </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].QuantityPerUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].ProductImage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Product[0].Supplier)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in   Model.Product) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+               @{
+                    if(!string.IsNullOrEmpty(@item.ProductImage))
+                    {
+                        <img src="~/images/@item.ProductImage" width="100" height="100"/>
+                    }
+               }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.CompanyName)
+            </td>
+            <td>
+                <div class="btn-group">
+                <a asp-page="./Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-info">Edit</a>
+                @{
+                    if(item.ProductStatus == 1)
+                    {
+                         <a asp-page="./Delete" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger">Delete</a>
+                    }
+                }
+                </div>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<p>
+    <a asp-page="Create" class="btn btn-sm btn-success">Create New</a>
+</p>
+@section Scripts{ 
+    <script type="text/javascript">
+        function openSuccessModal(strMessage) {
+            var myDiv = document.getElementById("MyModalSuccessAlertBody");
+            myDiv.innerHTML = strMessage;
+            $('#myModalSuccess').modal('show');
+        }
+        $(document).ready(function () {
+            var msg = "@TempData["SuccessMessage"]";
+            if (msg)
+                openSuccessModal(msg);
+        });
+    </script>
+}

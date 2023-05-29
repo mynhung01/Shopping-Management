@@ -1,0 +1,31 @@
+﻿@page
+@model ShoppingAssignment_SE151295.Pages.Login.MyLoginModel
+@{
+    ViewData["Title"] = "Login Page";
+    Layout = "~/Pages/Shared/_LayoutLogin.cshtml";
+}
+<head>
+
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<div class="overlay">
+    <form method="POST">
+        <div class="con">
+            <header class="head-form">
+                <h2>Log In</h2>
+            </header>
+            <br />
+            <div class="form-group">
+                <input class="form-control" id="txt-input" type="text" placeholder="Email" asp-for="CusLogin.Email"><br />
+                <input class="form-control" type="password" placeholder="Password" id="pwd" asp-for="CusLogin.Password"><br />
+
+                <input type="submit" value="Login" class="log-in" /><br /><br />
+                <input type="submit" asp-page-handler="Register" value="Register" class="regis" />
+            </div>
+        </div>
+        @if (!string.IsNullOrEmpty(@Model.ErrorMsg))
+        {
+            <p class="alert alert-danger" role="alert">@Model.ErrorMsg</p>
+        }
+    </form>
+</div>
